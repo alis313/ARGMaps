@@ -1,0 +1,13 @@
+{
+  "appId": "com.geologix.arg",
+  "appName": "ARG",
+  "webDir": "www",
+  "backgroundColor": "#191919",
+  "android": {
+    "allowMixedContent": false,
+    "webContentsDebuggingEnabled": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}
