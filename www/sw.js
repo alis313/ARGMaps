@@ -1,0 +1,4 @@
+const N='arl-v16',F=["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "lib/shp.min.js", "lib/Vazirmatn.woff2", "lib/togeojson.umd.js", "lib/leaflet.js", "lib/leaflet.css"];
+self.addEventListener('install',e=>{if(self.location.hostname!=='localhost')e.waitUntil(caches.open(N).then(c=>c.addAll(F)));self.skipWaiting()});
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==N&&x!=='arl-tiles').map(x=>caches.delete(x)))).then(()=>clients.claim())));
+self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;if(/tile\.openstreetmap\.org|arcgisonline\.com|opentopomap\.org/.test(r.url)){e.respondWith(caches.open('arl-tiles').then(c=>fetch(r).then(x=>{c.put(r,x.clone());return x}).catch(()=>c.match(r))));return}if(self.location.hostname==='localhost')return;e.respondWith(caches.match(r).then(x=>x||fetch(r)))});
